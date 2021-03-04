@@ -49,6 +49,7 @@ Usage
 
 """
 import cgi
+from html import escape
 import json
 import sys
 import time
@@ -56,6 +57,8 @@ import locale
 import IPython
 import platform
 from IPython.core.magic import magics_class, line_magic, Magics
+
+cgi.escape = escape
 
 try:
     import pkg_resources
@@ -126,7 +129,9 @@ class VersionInformation(Magics):
         html = "<table>"
         html += "<tr><th>Software</th><th>Version</th></tr>"
         for name, version in self.packages:
-            _version = cgi.escape(version)
+#            _version = cgi.escape(version)
+#            _version = html.escape(version)
+            _version = escape(version)
             html += "<tr><td>%s</td><td>%s</td></tr>" % (name, _version)
 
         try:
